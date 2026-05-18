@@ -2,7 +2,13 @@
 
 Aplicación Android para el análisis de sistemas de colas mediante los modelos **M/M/1** y **M/M/S**. Permite ingresar parámetros de campo (tasa de llegada λ, tasa de servicio μ y número de servidores S), calcular las métricas de desempeño del sistema y generar un reporte PDF con los resultados y las ecuaciones empleadas.
 
-A partir de la **v2.0** la app incluye una vista de **Teoría** con la explicación de los modelos, parámetros y casos de uso, además de una vista **Acerca de** con el enlace al repositorio y los desarrolladores.
+A partir de la **v2.1** la app arranca en una **pantalla de Inicio** con accesos directos a la Calculadora, la Teoría y la información Acerca de, mejorando la experiencia de usuario.
+
+## Novedades de la v2.1
+
+- 🆕 **Pantalla de Inicio (Home):** vista de bienvenida con descripción de la app, accesos rápidos a cada sección y datos clave sobre los modelos. Es la nueva pantalla de arranque.
+- 🆕 **Tarjetas de navegación** con paleta Material 3 (containers primary/secondary/tertiary) y badges visuales para cada destino.
+- 🆕 Sección **"¿Sabías que…?"** con datos breves sobre M/M/1, M/M/S y la condición de estabilidad ρ < 1.
 
 ## Novedades de la v2.0
 
@@ -12,6 +18,7 @@ A partir de la **v2.0** la app incluye una vista de **Teoría** con la explicaci
 
 ## Características
 
+- Pantalla de **Inicio** con accesos directos a las secciones principales.
 - Cálculo de modelos **M/M/1** y **M/M/S**.
 - Métricas obtenidas: ρ (utilización), P₀, L, Lq, W, Wq y Pw.
 - Captura de metadatos del estudio: proyecto, analista, ubicación y observaciones.
@@ -40,6 +47,7 @@ app/src/main/java/com/yeipi/teoriacolas/
 │   ├── PdfReportGenerator.kt    # Generación del reporte PDF
 │   └── PdfActions.kt            # Abrir / compartir el PDF
 └── ui/
+    ├── HomeScreen.kt            # Pantalla de Inicio (landing y accesos rápidos)
     ├── TheoryScreen.kt          # Vista de Teoría (modelos, parámetros, casos de uso)
     ├── AboutScreen.kt           # Vista Acerca de (repo y desarrolladores)
     └── theme/                   # Tema Material 3
@@ -76,6 +84,7 @@ Los APK listos para instalar se encuentran en la carpeta [`releases/`](./release
 
 | Versión | Archivo | Tamaño aprox. | Cambios |
 |---------|---------|---------------|---------|
+| 2.1 (debug) | [`releases/TeoriaColas-v2.1.apk`](./releases/TeoriaColas-v2.1.apk) | ~11 MB | Pantalla de Inicio con accesos rápidos y datos clave |
 | 2.0 (debug) | [`releases/TeoriaColas-v2.0.apk`](./releases/TeoriaColas-v2.0.apk) | ~11 MB | Vistas de Teoría y Acerca de, navegación por menú |
 | 1.0 (debug) | [`releases/TeoriaColas-v1.0.apk`](./releases/TeoriaColas-v1.0.apk) | ~11 MB | Versión inicial: calculadora M/M/1 y M/M/S + PDF |
 
@@ -92,7 +101,7 @@ Los APK listos para instalar se encuentran en la carpeta [`releases/`](./release
 
 3. **Instala la aplicación:**
    - Abre la app **Archivos** (o el gestor de archivos de tu dispositivo) y localiza el APK descargado.
-   - Toca el archivo `TeoriaColas-v2.0.apk`.
+   - Toca el archivo `TeoriaColas-v2.1.apk`.
    - Pulsa **Instalar** y espera a que finalice el proceso.
    - Cuando termine, pulsa **Abrir** para ejecutar la aplicación.
 
@@ -113,6 +122,16 @@ Para desinstalar, mantén pulsado el ícono de **ColasPro** en el lanzador de ap
 
 ## Uso de la aplicación
 
+### Pantalla de Inicio
+
+Al abrir la app verás la pantalla **Home**, que incluye:
+
+- Una tarjeta de bienvenida con el resumen de qué hace ColasPro.
+- Tres accesos rápidos: **Calculadora** (destacada), **Teoría** y **Acerca de**.
+- Una sección **"¿Sabías que…?"** con datos breves sobre los modelos M/M/1, M/M/S y la condición de estabilidad.
+
+Desde aquí puedes entrar a cualquier sección con un solo toque.
+
 ### Calculadora
 
 1. Completa los campos de **Proyecto**, **Analista** y **Ubicación**.
@@ -125,7 +144,8 @@ Para desinstalar, mantén pulsado el ícono de **ColasPro** en el lanzador de ap
 
 Desde el botón **Menú** de la barra superior puedes alternar entre:
 
-- **Calculadora:** pantalla principal para ingresar datos y calcular las métricas.
+- **Inicio:** pantalla de bienvenida con accesos rápidos.
+- **Calculadora:** ingresar datos y calcular las métricas.
 - **Teoría:** explicación detallada de la Teoría de Colas, los modelos implementados, los parámetros que debes medir y los casos de uso típicos.
 - **Acerca de:** información de la app, enlace al repositorio en GitHub y créditos de los desarrolladores.
 

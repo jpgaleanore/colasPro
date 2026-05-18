@@ -21,13 +21,15 @@ import com.yeipi.teoriacolas.domain.QueueingResult
 import com.yeipi.teoriacolas.report.PdfActions
 import com.yeipi.teoriacolas.report.PdfReportGenerator
 import com.yeipi.teoriacolas.ui.AboutScreen
+import com.yeipi.teoriacolas.ui.HomeScreen
 import com.yeipi.teoriacolas.ui.TheoryScreen
 import com.yeipi.teoriacolas.ui.theme.TeoriaColasTheme
 
 private enum class Screen(val title: String, val label: String) {
-    Calculator("Teoría de Colas", "Calculadora"),
-    Theory("Teoría de Colas — Teoría", "Teoría"),
-    About("Teoría de Colas — Acerca de", "Acerca de")
+    Home("ColasPro", "Inicio"),
+    Calculator("ColasPro — Calculadora", "Calculadora"),
+    Theory("ColasPro — Teoría", "Teoría"),
+    About("ColasPro — Acerca de", "Acerca de")
 }
 
 class MainActivity : ComponentActivity() {
@@ -46,7 +48,7 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QueueingApp() {
-    var currentScreen by remember { mutableStateOf(Screen.Calculator) }
+    var currentScreen by remember { mutableStateOf(Screen.Home) }
     var menuExpanded by remember { mutableStateOf(false) }
 
     // Estados de los metadatos
@@ -94,6 +96,15 @@ fun QueueingApp() {
         }
     ) { padding ->
         when (currentScreen) {
+            Screen.Home -> {
+                HomeScreen(
+                    modifier = Modifier.padding(padding),
+                    onOpenCalculator = { currentScreen = Screen.Calculator },
+                    onOpenTheory = { currentScreen = Screen.Theory },
+                    onOpenAbout = { currentScreen = Screen.About }
+                )
+                return@Scaffold
+            }
             Screen.Theory -> {
                 TheoryScreen(modifier = Modifier.padding(padding))
                 return@Scaffold
