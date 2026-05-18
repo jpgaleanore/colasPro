@@ -1,6 +1,14 @@
-# Teoría de Colas
+# Teoría de Colas (ColasPro)
 
 Aplicación Android para el análisis de sistemas de colas mediante los modelos **M/M/1** y **M/M/S**. Permite ingresar parámetros de campo (tasa de llegada λ, tasa de servicio μ y número de servidores S), calcular las métricas de desempeño del sistema y generar un reporte PDF con los resultados y las ecuaciones empleadas.
+
+A partir de la **v2.0** la app incluye una vista de **Teoría** con la explicación de los modelos, parámetros y casos de uso, además de una vista **Acerca de** con el enlace al repositorio y los desarrolladores.
+
+## Novedades de la v2.0
+
+- 🆕 **Vista de Teoría:** explica qué es la Teoría de Colas, los modelos M/M/1 y M/M/S, los supuestos, cómo medir cada parámetro (λ, μ, S), el significado de cada métrica de salida y los casos de uso (bancos, supermercados, hospitales, call centers, peajes, líneas de producción, redes).
+- 🆕 **Vista Acerca de:** información de la aplicación, enlace al repositorio en GitHub y créditos de los desarrolladores.
+- 🆕 **Menú de navegación** en la barra superior para alternar entre Calculadora, Teoría y Acerca de.
 
 ## Características
 
@@ -9,6 +17,8 @@ Aplicación Android para el análisis de sistemas de colas mediante los modelos 
 - Captura de metadatos del estudio: proyecto, analista, ubicación y observaciones.
 - Generación de reporte **PDF** con los resultados y las ecuaciones aplicadas.
 - Acciones rápidas para **abrir** o **compartir** el PDF generado (se guarda en la carpeta Descargas del dispositivo).
+- Vista de **Teoría** integrada con explicación detallada del modelo y las fórmulas.
+- Vista **Acerca de** con enlace directo al repositorio y créditos.
 - Interfaz construida con **Jetpack Compose** y **Material 3**.
 
 ## Stack técnico
@@ -23,12 +33,16 @@ Aplicación Android para el análisis de sistemas de colas mediante los modelos 
 
 ```
 app/src/main/java/com/yeipi/teoriacolas/
-├── MainActivity.kt              # UI principal en Compose
+├── MainActivity.kt              # UI principal y navegación entre vistas
 ├── domain/
 │   └── QueueingCalculator.kt    # Lógica de cálculo M/M/1 y M/M/S
-└── report/
-    ├── PdfReportGenerator.kt    # Generación del reporte PDF
-    └── PdfActions.kt            # Abrir / compartir el PDF
+├── report/
+│   ├── PdfReportGenerator.kt    # Generación del reporte PDF
+│   └── PdfActions.kt            # Abrir / compartir el PDF
+└── ui/
+    ├── TheoryScreen.kt          # Vista de Teoría (modelos, parámetros, casos de uso)
+    ├── AboutScreen.kt           # Vista Acerca de (repo y desarrolladores)
+    └── theme/                   # Tema Material 3
 ```
 
 ## Compilación desde el código fuente
@@ -37,8 +51,8 @@ Requisitos: **Android Studio** (Koala o superior) y **JDK 11+**.
 
 ```bash
 # Clonar el repositorio
-git clone <url-del-repo>
-cd TeoriaColas
+git clone https://github.com/jpgaleanore/colasPro
+cd colasPro
 
 # Generar el APK de debug
 ./gradlew assembleDebug
@@ -58,11 +72,14 @@ app/build/outputs/apk/release/app-release-unsigned.apk
 
 ## 📦 APK e instalación en Android
 
-El APK listo para instalar se encuentra en la carpeta [`releases/`](./releases/) de este repositorio:
+Los APK listos para instalar se encuentran en la carpeta [`releases/`](./releases/) de este repositorio:
 
-| Versión | Archivo | Tamaño aprox. |
-|---------|---------|---------------|
-| 1.0 (debug) | [`releases/TeoriaColas-v1.0.apk`](./releases/TeoriaColas-v1.0.apk) | ~11 MB |
+| Versión | Archivo | Tamaño aprox. | Cambios |
+|---------|---------|---------------|---------|
+| 2.0 (debug) | [`releases/TeoriaColas-v2.0.apk`](./releases/TeoriaColas-v2.0.apk) | ~11 MB | Vistas de Teoría y Acerca de, navegación por menú |
+| 1.0 (debug) | [`releases/TeoriaColas-v1.0.apk`](./releases/TeoriaColas-v1.0.apk) | ~11 MB | Versión inicial: calculadora M/M/1 y M/M/S + PDF |
+
+> Se recomienda instalar siempre la versión más reciente.
 
 ### Instalación paso a paso
 
@@ -75,7 +92,7 @@ El APK listo para instalar se encuentra en la carpeta [`releases/`](./releases/)
 
 3. **Instala la aplicación:**
    - Abre la app **Archivos** (o el gestor de archivos de tu dispositivo) y localiza el APK descargado.
-   - Toca el archivo `TeoriaColas-v1.0.apk`.
+   - Toca el archivo `TeoriaColas-v2.0.apk`.
    - Pulsa **Instalar** y espera a que finalice el proceso.
    - Cuando termine, pulsa **Abrir** para ejecutar la aplicación.
 
@@ -90,17 +107,35 @@ El APK listo para instalar se encuentra en la carpeta [`releases/`](./releases/)
 
 ### Desinstalación
 
-Para desinstalar, mantén pulsado el ícono de **Teoría de Colas** en el lanzador de aplicaciones y selecciona **Desinstalar**, o ve a **Ajustes** → **Aplicaciones** → **Teoría de Colas** → **Desinstalar**.
+Para desinstalar, mantén pulsado el ícono de **ColasPro** en el lanzador de aplicaciones y selecciona **Desinstalar**, o ve a **Ajustes** → **Aplicaciones** → **ColasPro** → **Desinstalar**.
 
 ---
 
 ## Uso de la aplicación
+
+### Calculadora
 
 1. Completa los campos de **Proyecto**, **Analista** y **Ubicación**.
 2. Selecciona el modelo: **M/M/1** o **M/M/S**.
 3. Ingresa **λ** (tasa de llegada) y **μ** (tasa de servicio) en clientes/hora. Si elegiste M/M/S, ingresa también el número de servidores **S**.
 4. Pulsa **Calcular** para ver los resultados (ρ, P₀, L, Lq, W, Wq y Pw cuando aplique).
 5. Pulsa **Generar PDF** para crear el reporte. El archivo se guarda en la carpeta **Descargas** del dispositivo y puede abrirse o compartirse directamente desde la app.
+
+### Navegación entre vistas
+
+Desde el botón **Menú** de la barra superior puedes alternar entre:
+
+- **Calculadora:** pantalla principal para ingresar datos y calcular las métricas.
+- **Teoría:** explicación detallada de la Teoría de Colas, los modelos implementados, los parámetros que debes medir y los casos de uso típicos.
+- **Acerca de:** información de la app, enlace al repositorio en GitHub y créditos de los desarrolladores.
+
+## Desarrolladores
+
+- **David Gómez**
+- **Juan Pablo Galeano**
+- **David Sánchez**
+
+Repositorio: [github.com/jpgaleanore/colasPro](https://github.com/jpgaleanore/colasPro)
 
 ## Licencia
 

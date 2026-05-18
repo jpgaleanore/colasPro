@@ -20,7 +20,15 @@ import com.yeipi.teoriacolas.domain.QueueingInput
 import com.yeipi.teoriacolas.domain.QueueingResult
 import com.yeipi.teoriacolas.report.PdfActions
 import com.yeipi.teoriacolas.report.PdfReportGenerator
+import com.yeipi.teoriacolas.ui.AboutScreen
+import com.yeipi.teoriacolas.ui.TheoryScreen
 import com.yeipi.teoriacolas.ui.theme.TeoriaColasTheme
+
+private enum class Screen(val title: String, val label: String) {
+    Calculator("Teoría de Colas", "Calculadora"),
+    Theory("Teoría de Colas — Teoría", "Teoría"),
+    About("Teoría de Colas — Acerca de", "Acerca de")
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +46,9 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QueueingApp() {
+    var currentScreen by remember { mutableStateOf(Screen.Calculator) }
+    var menuExpanded by remember { mutableStateOf(false) }
+
     // Estados de los metadatos
     var projectName by remember { mutableStateOf("") }
     var analyst by remember { mutableStateOf("") }
@@ -57,8 +68,42 @@ fun QueueingApp() {
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Teoría de Colas") }) }
+        topBar = {
+            TopAppBar(
+                title = { Text(currentScreen.title) },
+                actions = {
+                    Box {
+                        TextButton(onClick = { menuExpanded = true }) { Text("Menú") }
+                        DropdownMenu(
+                            expanded = menuExpanded,
+                            onDismissRequest = { menuExpanded = false }
+                        ) {
+                            Screen.entries.forEach { screen ->
+                                DropdownMenuItem(
+                                    text = { Text(screen.label) },
+                                    onClick = {
+                                        currentScreen = screen
+                                        menuExpanded = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+            )
+        }
     ) { padding ->
+        when (currentScreen) {
+            Screen.Theory -> {
+                TheoryScreen(modifier = Modifier.padding(padding))
+                return@Scaffold
+            }
+            Screen.About -> {
+                AboutScreen(modifier = Modifier.padding(padding))
+                return@Scaffold
+            }
+            Screen.Calculator -> { /* renderiza la calculadora abajo */ }
+        }
         Column(
             modifier = Modifier
                 .padding(padding)
